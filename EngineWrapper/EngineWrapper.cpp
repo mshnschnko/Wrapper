@@ -1,21 +1,27 @@
 ﻿// EngineWrapper.cpp: определяет точку входа для приложения.
 //
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
 
 #include "EngineWrapper.h"
 
+void MemoryLeaks(void)
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+}
 
 int main() {
 	Engine engine;
-	SumSubject* sub1 = new SumSubject;
-	Wrapper* wrapper1 = new Wrapper(sub1, &SumSubject::sum, { {"arg1", 1},{"arg2", 2} });
-	MultiplySubject* sub2 = new MultiplySubject;
-	Wrapper* wrapper2 = new Wrapper(sub2, &MultiplySubject::multiply, { {"arg1", 1},{"arg2", 2} });
-	GetMaxSubject* sub3 = new GetMaxSubject;
-	Wrapper* wrapper3 = new Wrapper(sub3, &GetMaxSubject::getMax, { {"arg1", 1},{"arg2", 2} });
 
 	// SUM
+	SumSubject sub1;
+	Wrapper wrapper1(&sub1, &SumSubject::sum, { {"arg1", 1},{"arg2", 2} });
+
 	try {
-		engine.register_сommand(wrapper1, "sum");
+		engine.register_сommand(&wrapper1, "sum");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -37,8 +43,10 @@ int main() {
 	}
 
 	// MULTIPLY
+	MultiplySubject sub2;
+	Wrapper wrapper2(&sub2, &MultiplySubject::multiply, { {"arg1", 1},{"arg2", 2} });
 	try {
-		engine.register_сommand(wrapper2, "mult");
+		engine.register_сommand(&wrapper2, "mult");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -52,8 +60,11 @@ int main() {
 	}
 
 	// GET MAX
+	GetMaxSubject sub3;
+	Wrapper wrapper3(&sub3, &GetMaxSubject::getMax, { {"arg1", 1},{"arg2", 2} });
+
 	try {
-		engine.register_сommand(wrapper3, "max");
+		engine.register_сommand(&wrapper3, "max");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -65,5 +76,6 @@ int main() {
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
+	MemoryLeaks();
 	return 0;
 }
