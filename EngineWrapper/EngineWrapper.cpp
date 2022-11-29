@@ -21,7 +21,7 @@ int main() {
 	Wrapper wrapper1(&sub1, &SumSubject::sum, { {"arg1", 1},{"arg2", 2} });
 
 	try {
-		engine.register_сommand(&wrapper1, "sum");
+		engine.register_command(&wrapper1, "sum");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -46,7 +46,7 @@ int main() {
 	MultiplySubject sub2;
 	Wrapper wrapper2(&sub2, &MultiplySubject::multiply, { {"arg1", 1},{"arg2", 2} });
 	try {
-		engine.register_сommand(&wrapper2, "mult");
+		engine.register_command(&wrapper2, "mult");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
@@ -64,7 +64,7 @@ int main() {
 	Wrapper wrapper3(&sub3, &GetMaxSubject::getMax, { {"arg1", 1},{"arg2", 2} });
 
 	try {
-		engine.register_сommand(&wrapper3, "max");
+		engine.register_command(&wrapper3, "max");
 	}
 	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
