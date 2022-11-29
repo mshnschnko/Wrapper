@@ -12,7 +12,7 @@ class Engine {
 private:
 	std::map<std::string, Wrapper*> _commands;
 public:
-	void register_ñommand(Wrapper* command, const std::string& commandName) {
+	void register_command(Wrapper* command, const std::string& commandName) {
 		if (command == nullptr)
 			throw std::exception("Engine register command exception: unexpected nullptr from command");
 		if (_commands.find(commandName) != _commands.end())
